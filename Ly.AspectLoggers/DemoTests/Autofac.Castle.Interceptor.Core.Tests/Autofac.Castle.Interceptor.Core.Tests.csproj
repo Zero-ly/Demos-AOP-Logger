@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.4.0" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Demos\Autofac.Castle.Interceptor.Core\Autofac.Castle.Interceptor.Core.csproj" />
+  </ItemGroup>
+
+</Project>
