@@ -3,11 +3,16 @@ using MD.Logger.Interceptors;
 using System;
 using System.Reflection;
 
-namespace AspectLoggerX
+namespace MD.Loger.Net45.v0._8.Tests.Interceptors
 {
     [Aspect(Aspect.Scope.Global)]
     public class ExceptionLogger : BaseInterceptor
     {
+        public ExceptionLogger() : base(serviceType: Logger.ServiceType.RoleService, developer: Logger.Developer.BeckJin)
+        {
+
+        }
+
         [Advice(Advice.Type.Around, Advice.Target.Method)]
         public object TraceAround(
             [Advice.Argument(Advice.Argument.Source.Arguments)] object[] args,

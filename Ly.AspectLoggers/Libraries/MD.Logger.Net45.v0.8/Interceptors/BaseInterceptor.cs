@@ -1,39 +1,40 @@
 ﻿using Polly;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MD.Logger.Interceptors
 {
-    public class BaseInterceptor
+    public abstract class BaseInterceptor
     {
         #region Ctor
         /// <summary>
-        /// Using Default appSettings config string :ConfigurationManager.AppSettings["LogServiceConnStr"]
-        /// </summary>
-        public BaseInterceptor() : this(ConfigurationManager.AppSettings["LogServiceConnStr"]) { }
-
-        /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="logServiceUrl">ELK日志服务连接地址</param>
-        public BaseInterceptor(string logServiceUrl)
+        /// <param name="logServiceUrl">ELK日志服务连接地址(默认为 AppSettings["LogServiceConnStr"])</param>
+        /// <param name="serviceType">MD服务枚举</param>
+        /// <param name="developer">MD开发人员</param>
+        public BaseInterceptor(string logServiceUrl = null, string accountId = null, ServiceType serviceType = ServiceType.Unknown, Developer developer = Developer.Undefined)
         {
-            this.LogServiceUrl = logServiceUrl;
+            this.LogServiceUrl = logServiceUrl ?? ConfigurationManager.AppSettings["LogServiceConnStr"];
+            this.ServiceType = serviceType;
+            this.AccountId = accountId;
+            this.Developer = developer;
         }
         #endregion
 
         #region Fileds
-        protected string LogServiceUrl;
+        protected string LogServiceUrl { get; set; }
+        protected string AccountId { get; set; }
+        protected ServiceType ServiceType { get; set; }
+        protected Developer Developer { get; set; }
         #endregion
 
         #region Methods
         /// <summary>
-        /// 失败则重复执行
+        /// 重复执行    失败则重复执行
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action">Action</param>
@@ -48,7 +49,7 @@ namespace MD.Logger.Interceptors
         }
 
         /// <summary>
-        /// 返回类型的默认值（但内部对象未实例化）
+        /// 默认值     返回类型的默认值（但内部对象未实例化）
         /// </summary>
         /// <param name="returnType">Type</param>
         /// <returns>object</returns>
@@ -63,7 +64,7 @@ namespace MD.Logger.Interceptors
         }
 
         /// <summary>
-        /// 格式化消息内容
+        /// 格式化消息
         /// </summary>
         /// <param name="ex">Exception</param>
         /// <param name="args">方法参数值数组</param>
@@ -100,12 +101,17 @@ namespace MD.Logger.Interceptors
         /// <param name="methodInfo">方法信息</param>
         protected virtual void WriteLog(Exception ex, object[] args, MethodBase methodInfo)
         {
+            if (string.IsNullOrEmpty(this.LogServiceUrl))
+                return;
+
             //ToImprove
             //  var methodFullname = string.Format($"{methodInfo.DeclaringType} {methodInfo} ");
 
             var msg = MessageBuild(ex, args, methodInfo);
             var client = LogClient.GetClient(LogServiceUrl);
-            client.Error(message: msg, action: methodInfo.Name);
+            client?.Error(message: msg, action: methodInfo.Name, accountId: this.AccountId,
+                serviceType: this.ServiceType, developer: this.Developer,
+                exception: ex);
         }
         #endregion
     }

@@ -11,6 +11,9 @@ namespace MDLogger.Tests
     {
         static void Main(string[] args)
         {
+            Base.BaseTests.Can_create_default_instance();
+
+
             var console = new XLogger();
             console.Write("T");
 
@@ -18,6 +21,8 @@ namespace MDLogger.Tests
 
             var s = new SmsService();
             s.Write("g");
+
+
 
             Console.ReadKey();
         }
