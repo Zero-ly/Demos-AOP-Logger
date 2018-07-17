@@ -62,6 +62,7 @@
     <Compile Include="Grpc\Minglog.cs" />
     <Compile Include="Grpc\MinglogGrpc.cs" />
     <Compile Include="Interceptors\BaseInterceptor.cs" />
+    <Compile Include="Interceptors\DefaultInterceptor.cs" />
     <Compile Include="Interceptors\ExceptionInterceptor.cs" />
     <Compile Include="LogClient.cs" />
     <Compile Include="LogExtensions.cs" />

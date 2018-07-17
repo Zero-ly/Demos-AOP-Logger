@@ -1,0 +1,4 @@
+﻿统一版本 
+	Castle.Core v4.0.0.0
+	Autofac v4.6.2（在Service中存在引用了4.6.1和4.6.2的版本，优先考虑4.6.2）
+	Autofac.Extras.DynamicProxy v4.2.1 （高于v4.2.1的版本需要更新 Castle.Core的版本）

@@ -1,14 +1,10 @@
-﻿using AspectInjector.Broker;
+﻿using Castle.DynamicProxy;
 using Polly;
 using System;
-using System.Configuration;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 
-namespace MD.Logger.Interceptors
+namespace MD.Logger.Core.Interceptors
 {
-    public abstract class BaseInterceptor
+    public abstract class BaseInterceptor : IInterceptor
     {
         #region Ctor
         /// <summary>
@@ -19,7 +15,7 @@ namespace MD.Logger.Interceptors
         /// <param name="developer">MD开发人员</param>
         public BaseInterceptor(string logServiceUrl = null, string accountId = null, ServiceType serviceType = ServiceType.Unknown, Developer developer = Developer.Undefined)
         {
-            this.LogServiceUrl = logServiceUrl ?? ConfigurationManager.AppSettings["LogServiceConnStr"];
+            this.LogServiceUrl = logServiceUrl;//?? ConfigurationManager.AppSettings["LogServiceConnStr"];
             this.ServiceType = serviceType;
             this.AccountId = accountId;
             this.Developer = developer;
@@ -71,27 +67,9 @@ namespace MD.Logger.Interceptors
         /// <param name="args">方法参数值数组</param>
         /// <param name="methodInfo">方法信息</param>
         /// <returns></returns>
-        protected virtual string MessageBuild(Exception ex, object[] args, MethodBase methodInfo)
+        protected virtual string MessageBuild(Exception ex)
         {
-            //ToImprove
-            #region 获取拼接日志内容
-
-            var parameters = methodInfo.GetParameters();
-            var sb1 = new StringBuilder();
-
-            sb1.Append($"Method:[{methodInfo.Name}]|Params:[");
-            for (var i = 0; i < parameters.Length; i++)
-            {
-                sb1.Append(args[i] != null ? $"{parameters[i].Name}:{args[i]};" : $"{parameters[i].Name}:null;");
-            }
-
-            var sb2 = new StringBuilder();
-            sb2.Append($"]|ExceptionMessage:{ex.Message} ");
-
-            var logInfo = sb1.ToString().TrimEnd(';') + sb2;
-            #endregion
-
-            return logInfo;
+            return "";
         }
 
         /// <summary>
@@ -100,7 +78,7 @@ namespace MD.Logger.Interceptors
         /// <param name="ex">Exception</param>
         /// <param name="args">方法参数值数组</param>
         /// <param name="methodInfo">方法信息</param>
-        protected virtual void WriteLog(Exception ex, object[] args, MethodBase methodInfo)
+        protected virtual void WriteLog(Exception ex, object[] args)
         {
             if (string.IsNullOrEmpty(this.LogServiceUrl))
                 return;
@@ -108,62 +86,14 @@ namespace MD.Logger.Interceptors
             //ToImprove
             //  var methodFullname = string.Format($"{methodInfo.DeclaringType} {methodInfo} ");
 
-            var msg = MessageBuild(ex, args, methodInfo);
+            var msg = "";
             var client = LogClient.GetClient(LogServiceUrl);
-            client?.Error(message: msg, action: methodInfo.Name, accountId: this.AccountId,
+            client?.Error(message: msg, action: "", accountId: this.AccountId,
                 serviceType: this.ServiceType, developer: this.Developer,
                 exception: ex);
         }
         #endregion
 
-        #region Intercept Methods
-        /// <summary>
-        /// 拦截异常，并返回默认值
-        /// </summary>
-        /// <param name="args"></param>
-        /// <param name="_this"></param>
-        /// <param name="method"></param>
-        /// <param name="name"></param>
-        /// <param name="returnType"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        public object InterceptWithDefault(object[] args, MethodBase method, Type returnType, Func<object[], object> target)
-        {
-            try
-            {
-                var result = Retry(() => target(args));
-                return result;
-            }
-            catch (Exception ex)
-            {
-                WriteLog(ex, args, method);
-                return Default(returnType);
-            }
-        }
-
-        /// <summary>
-        /// 拦截异常，处理后仍返回该异常
-        /// </summary>
-        /// <param name="args"></param>
-        /// <param name="_this"></param>
-        /// <param name="method"></param>
-        /// <param name="name"></param>
-        /// <param name="returnType"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        public object InterceptWithException(object[] args, MethodBase method, Type returnType, Func<object[], object> target)
-        {
-            try
-            {
-                var result = Retry(() => target(args));
-                return result;
-            }
-            catch (Exception ex)
-            {
-                WriteLog(ex, args, method);
-                throw ex;
-            }
-        }
-        #endregion
+        public abstract void Intercept(IInvocation invocation);
     }
 }
