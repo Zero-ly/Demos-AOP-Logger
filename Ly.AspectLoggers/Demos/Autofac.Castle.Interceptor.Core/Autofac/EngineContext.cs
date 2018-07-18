@@ -50,6 +50,7 @@ namespace Autofac.Engine
                 dependencyInstances.Add((IDependencyRegistrar)Activator.CreateInstance(dependency));
             }
 
+
             dependencyInstances = dependencyInstances.AsQueryable().OrderBy(t => t.Order).ToList();
             foreach (var dependencyRegistrar in dependencyInstances)
                 dependencyRegistrar.Register(containerBuilder, typeFinder);

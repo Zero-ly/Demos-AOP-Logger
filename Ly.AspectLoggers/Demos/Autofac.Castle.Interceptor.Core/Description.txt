@@ -1,0 +1,2 @@
+﻿扩展ContainerBuilder
+	希望实现自动注册所有后缀为Service的服务。
