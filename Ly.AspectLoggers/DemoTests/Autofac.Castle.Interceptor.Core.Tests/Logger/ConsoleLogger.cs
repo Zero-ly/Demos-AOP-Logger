@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Autofac.Castle.Interceptor.Core.Tests.Logger
 {
-    [Intercept(typeof(IInterceptor))]
+    //[Intercept(typeof(IInterceptor))]
     public class ConsoleLogger : ILogger
     {
         //必须是虚方法

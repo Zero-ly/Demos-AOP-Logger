@@ -1,5 +1,6 @@
 ﻿using Autofac.Castle.Interceptor.Core.Interceptors;
 using Autofac.Castle.Interceptor.Core.Tests.Logger;
+using Autofac.Engine;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using System;
@@ -10,6 +11,11 @@ namespace Autofac.Castle.Interceptor.Core.Tests
     {
         static void Main(string[] args)
         {
+            EngineContext.Initialize();
+            var logger = EngineContext.Resolve<ILogger>();
+            logger.Write();
+
+
 #if UseClass
             var container = RegisterDependencies();
 
@@ -68,6 +74,11 @@ namespace Autofac.Castle.Interceptor.Core.Tests
             containerBuilder.Register(c => new AutofacCastleInterceptor());
             var build = containerBuilder.Build();
             return build;
+        }
+
+        private static void RegisterWithAutofac()
+        {
+            EngineContext.Initialize();
         }
     }
 }
