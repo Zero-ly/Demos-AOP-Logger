@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>MDNuget.Tests</AssemblyName>
+    <RootNamespace>MDNuget.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.2.1" />
+    <PackageReference Include="Castle.Core" Version="4.0.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.3.0" />
+    <PackageReference Include="Grpc.Core" Version="1.4.1" />
+    <PackageReference Include="Polly" Version="5.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MD.Logger">
+      <HintPath>MD.Logger.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

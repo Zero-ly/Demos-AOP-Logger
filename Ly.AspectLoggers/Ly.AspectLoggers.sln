@@ -47,9 +47,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.Loger.Net45.v0.8.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Logger.Core.v0.8", "Libraries\MD.Logger.Core.v0.8\MD.Logger.Core.v0.8.csproj", "{E893DC0B-23D4-42AD-B243-A788299B74CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Castle.Interceptor.Core.v2.0", "Demos\Autofac.Castle.Interceptor.Core.v2.0\Autofac.Castle.Interceptor.Core.v2.0.csproj", "{F8761308-760E-4CC3-A89A-FAF0D8F3FF4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Castle.Interceptor.Core.v2.0", "Demos\Autofac.Castle.Interceptor.Core.v2.0\Autofac.Castle.Interceptor.Core.v2.0.csproj", "{F8761308-760E-4CC3-A89A-FAF0D8F3FF4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Castle.Interceptor.Core.v2.0.Tests", "DemoTests\Autofac.Castle.Interceptor.Core.v2.0.Tests\Autofac.Castle.Interceptor.Core.v2.0.Tests.csproj", "{6DBAD779-99A6-467F-856E-1F2CFAAA22FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Castle.Interceptor.Core.v2.0.Tests", "DemoTests\Autofac.Castle.Interceptor.Core.v2.0.Tests\Autofac.Castle.Interceptor.Core.v2.0.Tests.csproj", "{6DBAD779-99A6-467F-856E-1F2CFAAA22FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDNuget.MD.Logger.Net452.Tests", "Tests\MDNuget.MD.Logger.Net452.Tests\MDNuget.MD.Logger.Net452.Tests.csproj", "{3E498D9E-0E56-46CD-B94A-37247D39DAB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDNuget.MD.Logger.Netstandard.Tests", "Tests\MDNuget.MD.Logger.Netstandard.Tests\MDNuget.MD.Logger.Netstandard.Tests.csproj", "{52F8CDE4-092D-4FD9-843F-EE01619E2693}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,6 +137,14 @@ Global
 		{6DBAD779-99A6-467F-856E-1F2CFAAA22FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DBAD779-99A6-467F-856E-1F2CFAAA22FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DBAD779-99A6-467F-856E-1F2CFAAA22FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E498D9E-0E56-46CD-B94A-37247D39DAB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E498D9E-0E56-46CD-B94A-37247D39DAB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E498D9E-0E56-46CD-B94A-37247D39DAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E498D9E-0E56-46CD-B94A-37247D39DAB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F8CDE4-092D-4FD9-843F-EE01619E2693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F8CDE4-092D-4FD9-843F-EE01619E2693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F8CDE4-092D-4FD9-843F-EE01619E2693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F8CDE4-092D-4FD9-843F-EE01619E2693}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +169,8 @@ Global
 		{E893DC0B-23D4-42AD-B243-A788299B74CD} = {B00D8693-0C02-4009-9A2F-F2FAD0F2786A}
 		{F8761308-760E-4CC3-A89A-FAF0D8F3FF4C} = {10760D61-1C15-4C0F-BDA4-D0B87ACB6BE7}
 		{6DBAD779-99A6-467F-856E-1F2CFAAA22FD} = {2E80AC87-DF5F-452B-8FC8-680122729DB6}
+		{3E498D9E-0E56-46CD-B94A-37247D39DAB8} = {B74A192B-504B-426F-AB05-D089FA3D6F72}
+		{52F8CDE4-092D-4FD9-843F-EE01619E2693} = {B74A192B-504B-426F-AB05-D089FA3D6F72}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2EA432B2-D3DC-4074-B4EE-78121D93D486}
