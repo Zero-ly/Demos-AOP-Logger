@@ -1,24 +1,26 @@
-﻿using Autofac.Castle.Interceptor.Core.Interceptors;
-using Autofac.Castle.Interceptor.Core.Tests.Logger;
-using Autofac.Engine;
-using Autofac.Extras.DynamicProxy;
-using Castle.DynamicProxy;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//v2.0
 
-namespace Autofac.Castle.Interceptor.Core.Tests.Infrastructure
-{
-    public class DependencyRegistrar : IDependencyRegistrar
-    {
-        public int Order => 1;
+//using Autofac.Castle.Interceptor.Core.Interceptors;
+//using Autofac.Castle.Interceptor.Core.Tests.Logger;
+//using Autofac.Engine;
+//using Autofac.Extras.DynamicProxy;
+//using Castle.DynamicProxy;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-        public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
-        {
-            builder.RegisterType<ConsoleLogger>().As<ILogger>()
-                .InterceptedBy(typeof(IInterceptor)).EnableClassInterceptors();
+//namespace Autofac.Castle.Interceptor.Core.Tests.Infrastructure
+//{
+//    public class DependencyRegistrar : IDependencyRegistrar
+//    {
+//        public int Order => 1;
 
-            builder.RegisterType<AutofacCastleInterceptor>().As<IInterceptor>().InstancePerLifetimeScope();
-        }
-    }
-}
+//        public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
+//        {
+//            builder.RegisterType<ConsoleLogger>().As<ILogger>()
+//                .InterceptedBy(typeof(IInterceptor)).EnableClassInterceptors();
+
+//            builder.RegisterType<AutofacCastleInterceptor>().As<IInterceptor>().InstancePerLifetimeScope();
+//        }
+//    }
+//}

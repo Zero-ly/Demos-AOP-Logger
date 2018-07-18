@@ -41,7 +41,7 @@ namespace Autofac.Engine
             var containerBuilder = new ContainerBuilder();
 
             var typeFinder = new AppDomainTypeFinder();
-            containerBuilder.RegisterInstance(typeFinder).SingleInstance();
+            containerBuilder.RegisterInstance<ITypeFinder>(typeFinder).As<ITypeFinder>().SingleInstance();
 
             var dependencyTypes = typeFinder.FindClassesOfType<IDependencyRegistrar>();
             var dependencyInstances = new List<IDependencyRegistrar>();

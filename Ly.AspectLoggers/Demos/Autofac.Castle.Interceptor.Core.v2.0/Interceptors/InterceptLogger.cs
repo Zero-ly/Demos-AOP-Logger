@@ -1,6 +1,8 @@
 ﻿using Castle.DynamicProxy;
 using MD.Logger;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 using System.Text;
 
 namespace Autofac.Castle.Interceptor.Core
@@ -18,7 +20,9 @@ namespace Autofac.Castle.Interceptor.Core
         #region Ctor
         public InterceptLogger(string logServiceUrl = null, string accountId = null, ServiceType serviceType = ServiceType.Unknown, Developer developer = Developer.Undefined)
         {
-            this.LogServiceUrl = logServiceUrl;
+
+
+            this.LogServiceUrl = logServiceUrl ?? DefaultLogServiceUrl();
             this.AccountId = accountId;               //？？ accountid 应在write时提供
             this.ServiceType = serviceType;
             this.Developer = developer;
@@ -26,6 +30,13 @@ namespace Autofac.Castle.Interceptor.Core
         #endregion
 
         #region Utilities
+        protected string DefaultLogServiceUrl()
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Config/appsettings.json");
+            var config = builder.Build();
+
+            return config?.GetSection("LogServiceConnStr")?.Value;
+        }
         protected string MessageBuild(IInvocation invocation, Exception ex)
         {
             var methodInfo = invocation.Method;

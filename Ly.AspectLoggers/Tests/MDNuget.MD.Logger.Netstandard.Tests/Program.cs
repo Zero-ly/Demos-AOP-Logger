@@ -1,8 +1,10 @@
 ﻿using Autofac;
+using Autofac.Engine;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using MD.Logger.Interceptors;
 using MDNuget.Tests.Services;
+using MDNuget.Tests.ServicesWithAutofac;
 using System;
 
 namespace MDNuget.Tests
@@ -14,6 +16,14 @@ namespace MDNuget.Tests
             var containerX2 = T3();
             var loggerX2 = containerX2.Resolve<IRoleService>();
             loggerX2.GetRoleDetail();
+
+            #region Autofac Engine
+            EngineContext.Initialize();
+            var userService = EngineContext.Resolve<IUserService>();
+            userService.GetUser();
+
+            #endregion
+
 
             Console.ReadKey();
         }

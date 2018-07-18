@@ -1,8 +1,8 @@
-﻿using Autofac.Castle.Interceptor.Core.Interceptors;
-using Autofac.Castle.Interceptor.Core.Tests.Logger;
+﻿using Autofac.Castle.Interceptor.Core.Tests.Logger;
 using Autofac.Engine;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
+using MDNuget.Tests.ServicesWithAutofac;
 using System;
 
 namespace Autofac.Castle.Interceptor.Core.Tests
@@ -11,9 +11,20 @@ namespace Autofac.Castle.Interceptor.Core.Tests
     {
         static void Main(string[] args)
         {
+            #region V3.0
             EngineContext.Initialize();
-            var logger = EngineContext.Resolve<ILogger>();
-            logger.Write();
+            var userService = EngineContext.Resolve<IUserService>();
+            userService.GetUser();
+
+            Console.ReadKey();
+            #endregion
+
+
+            #region V2.0
+            //EngineContext.Initialize();
+            //var logger = EngineContext.Resolve<ILogger>();
+            //logger.Write();
+            #endregion
 
 
 #if UseClass
@@ -24,9 +35,9 @@ namespace Autofac.Castle.Interceptor.Core.Tests
             logger.Write();
 #else
             //测试未通过，使用Class的方式 未成功
-            var containerX2 = RegisterDependenciesX2();
-            var loggerX2 = containerX2.Resolve<X2ConsoleLogger>();
-            loggerX2.Write();
+            //var containerX2 = RegisterDependenciesX2();
+            //var loggerX2 = containerX2.Resolve<X2ConsoleLogger>();
+            //loggerX2.Write();
 #endif
 
 
@@ -38,43 +49,43 @@ namespace Autofac.Castle.Interceptor.Core.Tests
             Console.ReadKey();
         }
 
-        private static IContainer RegisterDependencies()
-        {
+        //private static IContainer RegisterDependencies()
+        //{
 
-            var containerBuilder = new ContainerBuilder();
+        //    var containerBuilder = new ContainerBuilder();
 
-            #region Interface 注入
-            //启动Interceptor，是Attribute的方式
-            containerBuilder.RegisterType<ConsoleLogger>().As<ILogger>().EnableInterfaceInterceptors();
+        //    #region Interface 注入
+        //    //启动Interceptor，是Attribute的方式
+        //    containerBuilder.RegisterType<ConsoleLogger>().As<ILogger>().EnableInterfaceInterceptors();
 
-            ////启动Interceptor，是注册的方式 这样可以不用加Attribute
-            //containerBuilder.RegisterType<CircleShape>().As<IShape>().InterceptedBy(typeof(IInterceptor)).EnableInterfaceInterceptors();
-            #endregion
+        //    ////启动Interceptor，是注册的方式 这样可以不用加Attribute
+        //    //containerBuilder.RegisterType<CircleShape>().As<IShape>().InterceptedBy(typeof(IInterceptor)).EnableInterfaceInterceptors();
+        //    #endregion
 
-            //注册
-            containerBuilder.RegisterType<AutofacCastleInterceptor>().As<IInterceptor>().InstancePerDependency();
+        //    //注册
+        //    containerBuilder.RegisterType<AutofacCastleInterceptor>().As<IInterceptor>().InstancePerDependency();
 
-            var build = containerBuilder.Build();
-            return build;
-        }
+        //    var build = containerBuilder.Build();
+        //    return build;
+        //}
 
-        /// <summary>
-        /// Class注入
-        /// </summary>
-        /// <returns></returns>
-        private static IContainer RegisterDependenciesX2()
-        {
-            var containerBuilder = new ContainerBuilder();
+        ///// <summary>
+        ///// Class注入
+        ///// </summary>
+        ///// <returns></returns>
+        //private static IContainer RegisterDependenciesX2()
+        //{
+        //    var containerBuilder = new ContainerBuilder();
 
-            #region Class注入
-            containerBuilder.RegisterType<X2ConsoleLogger>().InterceptedBy(typeof(AutofacCastleInterceptor)).EnableClassInterceptors();
-            #endregion
+        //    #region Class注入
+        //    containerBuilder.RegisterType<X2ConsoleLogger>().InterceptedBy(typeof(AutofacCastleInterceptor)).EnableClassInterceptors();
+        //    #endregion
 
-            //注册
-            containerBuilder.Register(c => new AutofacCastleInterceptor());
-            var build = containerBuilder.Build();
-            return build;
-        }
+        //    //注册
+        //    containerBuilder.Register(c => new AutofacCastleInterceptor());
+        //    var build = containerBuilder.Build();
+        //    return build;
+        //}
 
         private static void RegisterWithAutofac()
         {
